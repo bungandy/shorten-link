@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { isMobile, isAndroid, isIOS } from 'react-device-detect';
+import { useEffect, useState } from 'react';
+import { isMobile, isAndroid, isIOS, isMacOs } from 'react-device-detect';
 
 
 const GET_LINK = gql
@@ -19,6 +19,7 @@ const GET_LINK = gql
 
 export default function LinkUrl({ slug }) {
   const router = useRouter()
+  const [link, setLink] = useState(null)
 
   const { loading, error, data } = useQuery(GET_LINK, {
     variables: {
@@ -41,12 +42,15 @@ export default function LinkUrl({ slug }) {
     // web is default
     let target = data?.linkUrl.webLink
 
-    if(isIOS && data?.linkUrl.iosLink){
+    // if((isIOS || isMacOs) && data?.linkUrl.iosLink){
+    if (isIOS && data?.linkUrl.iosLink){
       target = data?.linkUrl.iosLink
     }
-    else if(isAndroid && data?.linkUrl.androidLink){
+    else if (isAndroid && data?.linkUrl.androidLink){
       target = data?.linkUrl.androidLink
     }
+
+    setLink(target)
 
     if(!loading && target) {
       redirectToLink(target);
@@ -60,8 +64,9 @@ export default function LinkUrl({ slug }) {
         <title>Loading...</title>
       </Head>
       <main className="w-screen h-screen grid place-items-center text-xs">
-        <div>
-          <div>Loading...</div>
+        <div className="flex flex-col items-center">
+          <div className="font-bold">Loading...</div>
+          <div>{link}</div>
           <div>{ error && error.message }</div>
         </div>
       </main>
