@@ -63,8 +63,8 @@ export default function LinkUrl({ slug }) {
       <Head>
         <title>Loading...</title>
       </Head>
-      <main className="w-screen h-screen grid place-items-center text-xs">
-        <div className="flex flex-col items-center">
+      <main className="w-screen h-[100dvh] grid place-items-center text-xs">
+        <div className="flex flex-col items-center text-center px-4">
           <div className="font-bold">Loading...</div>
           <div>{link}</div>
           <div>{ error && error.message }</div>

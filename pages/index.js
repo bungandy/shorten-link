@@ -6,7 +6,7 @@ export default function Home() {
       <Head>
         <title>Shorten Link</title>
       </Head>
-      <main className="w-screen h-screen grid place-items-center text-5xl">
+      <main className="w-screen h-[100dvh] grid place-items-center text-5xl">
         🚀
       </main>
     </>
