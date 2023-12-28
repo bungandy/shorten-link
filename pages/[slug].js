@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { isAndroid, isIOS } from 'react-device-detect';
+import { isMobile, isAndroid, isIOS } from 'react-device-detect';
 
 
 const GET_LINK = gql
@@ -30,7 +30,7 @@ export default function LinkUrl({ slug }) {
     // Redirect to another URL after the component mounts
     const redirectToLink = (url) => {
       console.log(url)
-      router.push(url);
+      router.push(url)
     };
 
     // check if schema available
