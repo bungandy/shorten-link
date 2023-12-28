@@ -2,20 +2,22 @@ import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { isAndroid, isIOS } from 'react-device-detect';
+
 
 const GET_LINK = gql
 `
   query LinkUrl($slug: String) {
     linkUrl(where: {shortenLink: $slug}) {
-      shortenLink
+      webLink
       iosLink
       androidLink
-      createdAt
     }
   }
 `
 
 export default function LinkUrl({ slug }) {
+  const router = useRouter()
 
   const { loading, error, data } = useQuery(GET_LINK, {
     variables: {
@@ -23,16 +25,30 @@ export default function LinkUrl({ slug }) {
     }
   })
 
-  const router = useRouter()
-
   useEffect(() => {
     // Redirect to another URL after the component mounts
     const redirectToLink = (url) => {
+      console.log(url)
       router.push(url);
     };
 
-    if(!loading && data?.linkUrl) {
-      redirectToLink(data?.linkUrl.iosLink);
+    // check if schema available
+    // const match = url.match('/^([a-zA-Z0-9-]+):\/\//')
+    // const schemaName = match ? match[1] : null
+    // if(schemaName){}
+
+    // web is default
+    let target = data?.linkUrl.webLink
+
+    if(isIOS){
+      target = data?.linkUrl.iosLink
+    }
+    else if(isAndroid){
+      target = data?.linkUrl.androidLink
+    }
+
+    if(!loading && target) {
+      redirectToLink(target);
     }
   }, [loading]); // The empty dependency array ensures this effect runs once after the component mounts
 
