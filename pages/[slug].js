@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { isAndroid, isIOS } from 'react-device-detect';
@@ -54,12 +55,17 @@ export default function LinkUrl({ slug }) {
 
 
   return (
-    <main className="w-screen h-screen grid place-items-center text-xs">
-      <div>
-        <div>Loading...</div>
-        <div>{ error && error.message }</div>
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Loading...</title>
+      </Head>
+      <main className="w-screen h-screen grid place-items-center text-xs">
+        <div>
+          <div>Loading...</div>
+          <div>{ error && error.message }</div>
+        </div>
+      </main>
+    </>
   )
 }
 

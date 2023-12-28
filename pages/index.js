@@ -1,6 +1,15 @@
+import Head from "next/head";
+
 export default function Home() {
   return (
-    <main className="w-screen h-screen grid place-items-center text-xs">Loading...</main>
+    <>
+      <Head>
+        <title>Shorten Link</title>
+      </Head>
+      <main className="w-screen h-screen grid place-items-center text-5xl">
+        🚀
+      </main>
+    </>
   )
 }
 
