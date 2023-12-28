@@ -41,10 +41,10 @@ export default function LinkUrl({ slug }) {
     // web is default
     let target = data?.linkUrl.webLink
 
-    if(isIOS){
+    if(isIOS && data?.linkUrl.iosLink){
       target = data?.linkUrl.iosLink
     }
-    else if(isAndroid){
+    else if(isAndroid && data?.linkUrl.androidLink){
       target = data?.linkUrl.androidLink
     }
 
